@@ -6,7 +6,6 @@ import authRoutes from "./routes/authRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import jobRoutes from "./routes/jobRoutes.js";
 import cors from "cors";
-import margan from "morgan";
 import morgan from "morgan";
 import errorMiddelware from "./middlewares/errorMiddleware.js";
 const app = express();
