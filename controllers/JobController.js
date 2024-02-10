@@ -1,5 +1,5 @@
 import jobsModel from "../models/jobsModel";
-
+import mongoose from "mongoose";
 const createJob = async (req, res, next) => {
   const { company, position } = req.body;
   if (!company || !position) {
@@ -53,4 +53,27 @@ const updateJobById = async (req, res, next) => {
   });
   res.status(200).json({ updateJob });
 };
-export { createJob, getAllJob, deleteJobById, updateJobById };
+
+//JOBS STATUS AND FILTER
+const jobStats = async (req, res, next) => {
+  const stats = await jobsModel.aggregate([
+    //search by user jobs
+    {
+      $match: {
+        createdBy: new mongoose.Types.ObjectId(req.user.userId),
+      },
+      //if want to perform grouping
+    },
+    {
+      $group: {
+        _id: "$status",
+        count: { $sum: 1 },
+      },
+    },
+  ]);
+  return res.status(200).json({ stats, totalJob: stats.length });
+};
+
+//implement searching sorting and filter and pagination in express js
+
+export { createJob, getAllJob, deleteJobById, updateJobById, jobStats };

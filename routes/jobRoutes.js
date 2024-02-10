@@ -5,6 +5,7 @@ import {
   getAllJob,
   deleteJobById,
   updateJobById,
+  jobStats,
 } from "../controllers/JobController";
 
 //router object
@@ -16,5 +17,11 @@ router.post("/get-job", userAuth, getAllJob);
 //UPDATE JOB
 router.patch("/update-job/:id,", userAuth, updateJobById);
 router.delete("/delete-job/:id,", userAuth, deleteJobById);
+
+router.delete("/delete-job/:id,", userAuth, deleteJobById);
+//JOB STATS FILTER || GET
+
+//get logged in user job(which is created by logged in user)
+router.get("/job-stats/,", userAuth, jobStats);
 
 export default router;
